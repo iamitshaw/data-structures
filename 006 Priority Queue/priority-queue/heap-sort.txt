@@ -1,0 +1,39 @@
+/* Method - II *-- without using extra space for heap_sort --* */
+
+/* build heap */
+template <typename T>
+void binary_heap<T>::build_heap(T* array, ssize_t array_size) {
+    /* heap container is holding the provided array */
+    this->heap = array;
+
+    /* capacity of heap container is equal to the array_size */
+    this->capacity = array_size;
+
+    /* update the heap size */
+    this->count = array_size;
+
+    /* initialize index with first non-leaf node */
+    for (ssize_t index{(this->count - 1)/2}; index >= 0; index--) {
+        percolate_down(index);
+    }
+}
+
+/* heap-sort algorithm  */
+template <typename T>
+void heap_sort(T* array, ssize_t array_size) {
+    binary_heap<T> heap(array_size);
+
+    /* build heap from the provided array elements */
+    heap.build_heap(array, array_size);
+
+    /* sorting procedure */
+    for (int i = (heap.heap_size() - 1);i >= 0;i--) {
+        array[i] = heap.extract_max();
+    }
+}
+
+/* destructor */
+template <typename T>
+binary_heap<T>::~binary_heap() {
+    delete [] this->heap;
+}
